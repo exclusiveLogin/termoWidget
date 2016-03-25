@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Погодный виджет</title>
+    <link href="bootstrap-3.3.6-dist/css/bootstrap.css" rel="stylesheet">
+    <link href="bootstrap-3.3.6-dist/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="hor_style.css" rel="stylesheet">
+    <script src="script/jquery-1.11.3.js"></script>
+
+
+    <script src="bootstrap-3.3.6-dist/js/bootstrap.js"></script>
+    <!--Сюда подключим скрипт виджета-->
+    <script src="script/opc.js"></script>
+    <script src="script/widget.js"></script>
+    <script src="script/color_led.js"></script>
+
+
+</head>
+<body>
+
+<div class="termo_container container-fluid plane">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 termo_top">
+        <div class="container-fluid">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                <div class="wh_icon" id="wh_icon_refresh"></div>
+                <div class="h_led" id="wh_refresh_led"></div>
+                <div>
+                    <div class="wh_updated wh_label wh_val hidden hidden-sm hidden-xs">Обновлено:</div>
+                    <div class="wh_val"><span id="wh_upd_val">---</span></div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                <div class="wh_icon" id="wh_icon_wind"></div>
+                <div class="h_led" id="wh_wind_led"></div>
+                <div id="wh_wind">
+                    <div class="wh_label hidden hidden-sm hidden-xs">Скорость ветра</div>
+                    <div class="wh_val"><span id="wh_wind_val">---</span> м/c</div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                <div class="wh_icon" id="wh_icon_temp0">
+                    <div class="wh_suffix">Воздух</div>
+                </div>
+                <div class="h_led" id="wh_temp0_led"></div>
+                <div id="wh_temp1">
+                    <div class="wh_label hidden hidden-sm hidden-xs">Температура воздуха</div>
+                    <div class="wh_val"><span id="wh_temp1_val">---</span> &deg;C</div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                <div class="wh_icon" id="wh_icon_tempavg">
+                    <div class="wh_suffix">Средняя</div>
+                </div>
+                <div class="h_led" id="wh_tempavg_led"></div>
+                <div id="wh_tempavg">
+                    <div class="wh_label hidden hidden-sm hidden-xs">Средняя темпаратура воздуха</div>
+                    <div class="wh_val"><span id="wh_tempavg_val">---</span> &deg;C</div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                <div class="wh_icon" id="wh_icon_temp15">
+                    <div class="wh_suffix">15см</div>
+                </div>
+                <div class="h_led" id="wh_temp15_led"></div>
+                <div id="wh_temp2">
+                    <div class="wh_label hidden hidden-sm hidden-xs">Т. земли 15см</div>
+                    <div class="wh_val"><span id="wh_temp2_val">---</span> &deg;C</div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                <div class="wh_icon" id="wh_icon_temp60">
+                    <div class="wh_suffix">60см</div>
+                </div>
+                <div class="h_led" id="wh_temp60_led"></div>
+                <div id="wh_temp3">
+                    <div class="wh_label hidden hidden-sm hidden-xs">Т. земли 60см</div>
+                    <div class="wh_val"><span id="wh_temp3_val">---</span> &deg;C</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+html, body, .termo_left, .termo_right{
+    height: 100%;
+    background-color: #f5f5f5;
+}
+.termo_container{
+    height: 290px;
+}
+.termo_left {
+    background-image: url("bg.jpg");
+    background-position: center center;
+    background-size: cover;
+    border: 2px outset #DCD8D8;
+    border-radius: 10px;
+    font-size: 15px;
+    color: white;
+    text-shadow: 0 0 10px white;
+}
+.termo_right{
+
+}
+.termo_top{
+    border: 2px outset #DCD8D8;
+    border-radius: 5px;
+}
+div#termologfull{
+    height: 400px;
+}
+div#w_wind {
+
+}
+span#w_wind_val {
+    font-size: 32px;
+}
+div#w_temp1 {
+
+}
+span#w_temp1_val {
+    font-size: 32px;
+}
+div#w_temp2 {
+    top: 5%;
+    position: relative;
+}
+span#w_temp2_val {
+    font-size: 32px;
+}
+div#w_temp3 {
+    top: 5%;
+    position: relative;
+}
+span#w_temp3_val {
+    font-size: 32px;
+}
+div#w_tempavg {
+    top: 3%;
+    position: relative;
+}
+span#w_tempavg_val {
+    font-size: 32px;
+}
+.wh_label {
+    font-size: 10px;
+    display: block;
+    border: 1px red solid;
+    text-align: center;
+    font-weight: bold;
+    height: 25px;
+    line-height: 12px;
+    /* margin: 0 auto; */
+}
+.w_label {
+    font-size: 10px;
+    display: block;
+    /* border: 1px red solid; */
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: -9px;
+    /* margin: 0 auto; */
+}
+.w_val, .wh_val{
+    text-align: center;
+}
+div.refresh_led {
+    width: 7px;
+    height: 7px;
+    right: 5px;
+    top: 5px;
+    position: absolute;
+    border-radius: 50%;
+    background-color: darkgreen;
+    box-shadow: 0 0 10px 0px darkgreen;
+}
+div.h_refresh_led {
+    width: 100%;
+    height: 3px;
+    margin: 0 auto;
+    /* right: 5px; */
+    top: 10px;
+    position: relative;
+    /* border-radius: 50%; */
+    background-color: darkgreen;
+    box-shadow: 0 0 10px 0px darkgreen;
+}
+div.refresh_led_error {
+    background-color: red;
+    box-shadow: 0 0 10px 0px red;
+}
+div.refresh_led_ok {
+    background-color: greenyellow;
+    box-shadow: 0 0 10px 0px greenyellow;
+}
+g.highcharts-range-selector-buttons > text {
+    display: none;
+}
+.w_updated{
+    margin-bottom: 5px;
+}
+#refresh_btn{
+    position: absolute;
+    top: 8px;
+    left: 40px;
+    z-index: 1;
+}
