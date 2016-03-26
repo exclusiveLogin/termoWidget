@@ -10,6 +10,21 @@ Global["upd"]="---";
 Global["timestamp"]=0;
 Global["dateandtime"]=0;
 
+Global["windObj"] = false;
+Global["tempObj"] = false;
+Global["tempSadObj"] = false;
+
+Global['trendConnected'] = false;
+
+Global['firstOpcDataConfirm_wind'] = false;
+Global['firstOpcDataConfirm_wind_p'] = false;
+Global['firstOpcDataConfirm_temp0'] = false;
+Global['firstOpcDataConfirm_temp15'] = false;
+Global['firstOpcDataConfirm_temp60'] = false;
+Global['firstOpcDataConfirm_tempavg'] = false;
+Global['firstOpcDataConfirm_tempsad'] = false;
+Global['firstOpcDataConfirm'] = false;
+
 var windTrend = new Array();
 var windTrend_p = new Array();
 var temp0Trend = new Array();
@@ -19,10 +34,22 @@ var tempAVGTrend = new Array();
 var tempSadTrend = new Array();
 var timestampplot = new Date().getTime();
 
+var ajaxOkWind = false; //Маркеры получения данных
+var ajaxOkWind_p = false;
+var ajaxOkTemp0 = false;
+var ajaxOkTemp15 = false;
+var ajaxOkTemp60 = false;
+var ajaxOkTempAVG = false;
+var ajaxOkTempSad = false;
 
 
 $(document).ready(function(){
+    //if(trendConnected){
+    //    Global["windObj"] = $('#termolog').highcharts();
+    //    Global["tempObj"] = $('#termologfull').highcharts();
+    //}
     refresh_opc();
+    refresh_trends();
     setInterval(refresh_opc,10000);
     setInterval(refresh_trends,300000);
 });
@@ -52,7 +79,7 @@ function refresh_opc(){
             Global.timestamp = Global.dateandtime.getTime();
         },
         error:function(){
-            console.error("Error load AJAX data");
+            console.log("Error load AJAX data");
         },
         complete:function(){
             if (Global.wind == 0){
@@ -72,7 +99,7 @@ function refresh_trends() {
         url:"script/windparser.php",
         dateType:'json',
         type:'GET',
-        async:false,
+        //async:false,
         success: function (data) {
             var test = $.parseJSON(data);
             var log;
@@ -85,6 +112,9 @@ function refresh_trends() {
                 //Decomposition datetime string;
                 windTrend[log]=[utcTimestamp,Number(test[log].value)];
             }
+            ajaxOkWind = true;
+            Global.firstOpcDataConfirm_wind = true;
+            checkopcconfirm();
         },
         error: function (err) {
             console.log(err);
@@ -94,7 +124,7 @@ function refresh_trends() {
         url:"script/windparser_p.php",
         dateType:'json',
         type:'GET',
-        async:false,
+        //async:false,
         success: function (data) {
             var test = $.parseJSON(data);
             var log;
@@ -107,6 +137,9 @@ function refresh_trends() {
 
                 windTrend_p[log]=[utcTimestamp,Number(test[log].value)];
             }
+            ajaxOkWind_p = true;
+            Global.firstOpcDataConfirm_wind_p = true;
+            checkopcconfirm();
         },
         error: function (err) {
             console.log(err);
@@ -116,7 +149,7 @@ function refresh_trends() {
         url:"script/temp0parser.php",
         dateType:'json',
         type:'GET',
-        async:false,
+        async:true,
         success: function (data) {
             var test = $.parseJSON(data);
             var log;
@@ -129,6 +162,9 @@ function refresh_trends() {
                 //Decomposition datetime string;
                 temp0Trend[log]=[utcTimestamp,Number(test[log].value)];
             }
+            ajaxOkTemp0 = true;
+            Global.firstOpcDataConfirm_temp0 = true;
+            checkopcconfirm();
         },
         error: function (err) {
             console.log(err);
@@ -138,7 +174,7 @@ function refresh_trends() {
         url:"script/temp15parser.php",
         dateType:'json',
         type:'GET',
-        async:false,
+        //async:false,
         success: function (data) {
             var test = $.parseJSON(data);
             var log;
@@ -151,6 +187,9 @@ function refresh_trends() {
                 //Decomposition datetime string;
                 temp15Trend[log]=[utcTimestamp,Number(test[log].value)];
             }
+            ajaxOkTemp15 = true;
+            Global.firstOpcDataConfirm_temp15 = true;
+            checkopcconfirm();
         },
         error: function (err) {
             console.log(err);
@@ -160,7 +199,7 @@ function refresh_trends() {
         url:"script/temp60parser.php",
         dateType:'json',
         type:'GET',
-        async:false,
+        //async:false,
         success: function (data) {
             var test = $.parseJSON(data);
             var log;
@@ -173,6 +212,11 @@ function refresh_trends() {
                 //Decomposition datetime string;
                 temp60Trend[log]=[utcTimestamp,Number(test[log].value)];
             }
+            ajaxOkTemp60 = true;
+            Global.firstOpcDataConfirm_temp60 = true;
+            checkopcconfirm();
+
+            
         },
         error: function (err) {
             console.log(err);
@@ -182,7 +226,7 @@ function refresh_trends() {
         url:"script/tempavgparser.php",
         dateType:'json',
         type:'GET',
-        async:false,
+        //async:false,
         success: function (data) {
             var test = $.parseJSON(data);
             var log;
@@ -195,6 +239,9 @@ function refresh_trends() {
                 //Decomposition datetime string;
                 tempAVGTrend[log]=[utcTimestamp,Number(test[log].value)];
             }
+            ajaxOkTempAVG = true;
+            Global.firstOpcDataConfirm_tempavg = true;
+            checkopcconfirm();            
         },
         error: function (err) {
             console.log(err);
@@ -204,7 +251,7 @@ function refresh_trends() {
         url:"script/tempsadparser.php",
         dateType:'json',
         type:'GET',
-        async:false,
+        //async:false,
         success: function (data) {
             var test = $.parseJSON(data);
             var log;
@@ -217,9 +264,35 @@ function refresh_trends() {
                 //Decomposition datetime string;
                 tempSadTrend[log]=[utcTimestamp,Number(test[log].value)];
             }
+            ajaxOkTempSad = true;
+            Global.firstOpcDataConfirm_tempsad = true;
+            checkopcconfirm();            
         },
         error: function (err) {
             console.log(err);
         }
     });
+}
+
+function checkopcconfirm() {
+    if(Global.trendConnected){
+        if(Global.firstOpcDataConfirm_temp0&&Global.firstOpcDataConfirm_temp15&&Global.firstOpcDataConfirm_temp60&&
+            Global.firstOpcDataConfirm_tempavg&&Global.firstOpcDataConfirm_tempsad&&Global.firstOpcDataConfirm_wind&&
+            Global.firstOpcDataConfirm_wind_p){
+            Global.firstOpcDataConfirm = true;
+        }
+        
+        if(ajaxOkWind){Global.windObj.series[0].setData(windTrend,true); ajaxOkWind = false;}
+        if(ajaxOkWind_p){Global.windObj.series[1].setData(windTrend_p,true); ajaxOkWind_p = false;}
+        if(ajaxOkTemp0){Global.tempObj.series[0].setData(temp0Trend,true); ajaxOkTemp0 = false;Global.tempObj.series[0].select(true);}
+        if(ajaxOkTemp15){Global.tempObj.series[2].setData(temp15Trend,true); ajaxOkTemp15 = false;}
+        if(ajaxOkTemp60){Global.tempObj.series[3].setData(temp60Trend,true); ajaxOkTemp60 = false;}
+        if(ajaxOkTempAVG){Global.tempObj.series[1].setData(tempAVGTrend,true); ajaxOkTempAVG = false;}
+        if(ajaxOkTempSad){Global.tempSadObj.series[0].setData(tempSadTrend,true); ajaxOkTempSad = false;}
+        
+        console.log("0:"+Global.tempObj.series[0].selected);
+        console.log("1:"+Global.tempObj.series[1].selected);
+        console.log("2:"+Global.tempObj.series[2].selected);
+        console.log("3:"+Global.tempObj.series[3].selected);
+    }
 }

@@ -1,9 +1,10 @@
+
+
 function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
     $('#termolog').highcharts("StockChart",{
         credits:{enabled:false},
         chart: {
             zoomType: 'x',
-            animation:false,
             backgroundColor:"#f5f5f5"
         },
         title: {
@@ -98,11 +99,11 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
                 }
             }]
     });
+    Global.windObj = $('#termolog').highcharts();
     $('#termologfull').highcharts('StockChart', {
         credits:{enabled:false},
         chart: {
             zoomType: 'x',
-            animation:false,
             backgroundColor:"#f5f5f5"
         },
         title: {
@@ -226,11 +227,11 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
             color:"black"
         }]
     });
+    Global.tempObj = $('#termologfull').highcharts();
     $('#termosad').highcharts('StockChart', {
         credits:{enabled:false},
         chart: {
             zoomType: 'x',
-            animation:true,
             backgroundColor:"#f5f5f5"
         },
         title: {
@@ -285,7 +286,7 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
                 text:"все"
             }
             ],
-            selected:3
+            selected:0
         },
         navigator:{
             height:10
@@ -304,6 +305,18 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
             color:"orange"
         }]
     });
+    Global.tempSadObj = $('#termosad').highcharts();
+    Global.trendConnected = true;
+}
+
+function updateTrend() {
+    Global.windObj.series[0].setData(windTrend);
+    Global.windObj.series[1].setData(windTrend_p);
+    Global.tempObj.series[0].setData(temp0Trend);
+    Global.tempObj.series[1].setData(tempAVGTrend);
+    Global.tempObj.series[2].setData(temp15Trend);
+    Global.tempObj.series[3].setData(temp60Trend);
+    Global.tempSadObj.series[0].setData(tempSadTrend);
 }
 
 $(document).ready(function () {
@@ -312,6 +325,28 @@ $(document).ready(function () {
             useUTC : false
         }
     });
-    
+    $("#refresh_btn").on('click',function () {
+        refresh_trends();
+    })
+
     renderTrend(windTrend,windTrend_p,temp0Trend,temp15Trend,temp60Trend,tempAVGTrend,tempSadTrend);
+
+    if(Global.firstOpcDataConfirm){
+        //updateTrend(windTrend,windTrend_p,temp0Trend,temp15Trend,temp60Trend,tempAVGTrend,tempSadTrend);
+    }
+    else {
+        console.log("opc starting error");
+        //setTimeout(testOpcStart,1000);
+    }
+    
+    
 });
+function testOpcStart() {
+    if(Global.firstOpcDataConfirm){
+        updateTrend(windTrend,windTrend_p,temp0Trend,temp15Trend,temp60Trend,tempAVGTrend,tempSadTrend);
+    }
+    else{
+        console.log("opc starting error");
+        setTimeout(testOpcStart,1000);
+    }
+}
