@@ -42,12 +42,10 @@ var ajaxOkTemp60 = false;
 var ajaxOkTempAVG = false;
 var ajaxOkTempSad = false;
 
+var ajaxOkWidget = false;
+
 
 $(document).ready(function(){
-    //if(trendConnected){
-    //    Global["windObj"] = $('#termolog').highcharts();
-    //    Global["tempObj"] = $('#termologfull').highcharts();
-    //}
     refresh_opc();
     refresh_trends();
     setInterval(refresh_opc,10000);
@@ -77,6 +75,7 @@ function refresh_opc(){
             Global.upd = data.widget[5].value.substring(11);
             Global.dateandtime = new Date();
             Global.timestamp = Global.dateandtime.getTime();
+            ajaxOkWidget = true;
         },
         error:function(){
             console.log("Error load AJAX data");
@@ -145,6 +144,33 @@ function refresh_trends() {
             console.log(err);
         }
     });
+
+
+    $.ajax({
+        url:"script/tempavgparser.php",
+        dateType:'json',
+        type:'GET',
+        //async:false,
+        success: function (data) {
+            var test = $.parseJSON(data);
+            var log;
+            for(log in test){
+                var arrTimestamp = test[log].datetime.split(',');
+                (arrTimestamp[1]<1)?arrTimestamp[1]=arrTimestamp[1]:arrTimestamp[1]-=1;
+
+                var utcTimestamp = Date.UTC(arrTimestamp[0],arrTimestamp[1],arrTimestamp[2],
+                    arrTimestamp[3],arrTimestamp[4],arrTimestamp[5]);
+                //Decomposition datetime string;
+                tempAVGTrend[log]=[utcTimestamp,Number(test[log].value)];
+            }
+            ajaxOkTempAVG = true;
+            Global.firstOpcDataConfirm_tempavg = true;
+            checkopcconfirm();
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    });    
     $.ajax({
         url:"script/temp0parser.php",
         dateType:'json',
@@ -223,31 +249,6 @@ function refresh_trends() {
         }
     });
     $.ajax({
-        url:"script/tempavgparser.php",
-        dateType:'json',
-        type:'GET',
-        //async:false,
-        success: function (data) {
-            var test = $.parseJSON(data);
-            var log;
-            for(log in test){
-                var arrTimestamp = test[log].datetime.split(',');
-                (arrTimestamp[1]<1)?arrTimestamp[1]=arrTimestamp[1]:arrTimestamp[1]-=1;
-
-                var utcTimestamp = Date.UTC(arrTimestamp[0],arrTimestamp[1],arrTimestamp[2],
-                    arrTimestamp[3],arrTimestamp[4],arrTimestamp[5]);
-                //Decomposition datetime string;
-                tempAVGTrend[log]=[utcTimestamp,Number(test[log].value)];
-            }
-            ajaxOkTempAVG = true;
-            Global.firstOpcDataConfirm_tempavg = true;
-            checkopcconfirm();            
-        },
-        error: function (err) {
-            console.log(err);
-        }
-    });
-    $.ajax({
         url:"script/tempsadparser.php",
         dateType:'json',
         type:'GET',
@@ -272,6 +273,7 @@ function refresh_trends() {
             console.log(err);
         }
     });
+
 }
 
 function checkopcconfirm() {
@@ -282,17 +284,50 @@ function checkopcconfirm() {
             Global.firstOpcDataConfirm = true;
         }
         
-        if(ajaxOkWind){Global.windObj.series[0].setData(windTrend,true); ajaxOkWind = false;}
-        if(ajaxOkWind_p){Global.windObj.series[1].setData(windTrend_p,true); ajaxOkWind_p = false;}
-        if(ajaxOkTemp0){Global.tempObj.series[0].setData(temp0Trend,true); ajaxOkTemp0 = false;Global.tempObj.series[0].select(true);}
-        if(ajaxOkTemp15){Global.tempObj.series[2].setData(temp15Trend,true); ajaxOkTemp15 = false;}
-        if(ajaxOkTemp60){Global.tempObj.series[3].setData(temp60Trend,true); ajaxOkTemp60 = false;}
-        if(ajaxOkTempAVG){Global.tempObj.series[1].setData(tempAVGTrend,true); ajaxOkTempAVG = false;}
-        if(ajaxOkTempSad){Global.tempSadObj.series[0].setData(tempSadTrend,true); ajaxOkTempSad = false;}
-        
-        console.log("0:"+Global.tempObj.series[0].selected);
-        console.log("1:"+Global.tempObj.series[1].selected);
-        console.log("2:"+Global.tempObj.series[2].selected);
-        console.log("3:"+Global.tempObj.series[3].selected);
+        if(ajaxOkWind){
+            Global.windObj.series[0].setData(windTrend,false,true,true);
+            ajaxOkWind = false;
+            Global.windObj.redraw();
+        }
+        if(ajaxOkWind_p){
+            Global.windObj.series[1].setData(windTrend_p,false,true,true);
+            ajaxOkWind_p = false;
+            Global.windObj.redraw();
+        }
+        if(ajaxOkTemp0){
+            //Global.tempObj.series[0].select(true);
+            Global.tempObj.series[0].setData(temp0Trend,false,true,true);
+            Global.tempObj.redraw();
+            //var s={},n={};
+            //s=Global.tempObj.xAxis[0].getExtremes();
+            //n=Global.tempObj.xAxis[1].getExtremes();
+            //console.log(s.max);
+            //console.log(n.max);
+            //Global.tempObj.xAxis[1].setExtremes(s.min, n.dataMax);
+
+            //Global.tempObj.reflow();
+            ajaxOkTemp0 = false;
+        }
+        if(ajaxOkTemp15){
+            Global.tempObj.series[2].setData(temp15Trend,false,true,true);
+            Global.tempObj.redraw();
+            ajaxOkTemp15 = false;
+            
+        }
+        if(ajaxOkTemp60){
+            Global.tempObj.series[3].setData(temp60Trend,false,true,true);
+            Global.tempObj.redraw();
+            ajaxOkTemp60 = false;
+        }
+        if(ajaxOkTempAVG){
+            Global.tempObj.series[1].setData(tempAVGTrend,false,true,true);
+            //Global.tempObj.redraw();
+            ajaxOkTempAVG = false;
+        }
+        if(ajaxOkTempSad){
+            Global.tempSadObj.series[0].setData(tempSadTrend,false,true,true);
+            Global.tempSadObj.redraw();
+            ajaxOkTempSad = false;
+        }
     }
 }

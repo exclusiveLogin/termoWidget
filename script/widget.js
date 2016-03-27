@@ -1,6 +1,12 @@
 $(document).ready(function(){
-    refresh_widget();
+    
     setInterval(refresh_widget,10000);
+    if(ajaxOkWidget){
+        refresh_widget();
+    }
+    else {
+        setTimeout(refresh_widget,1000);
+    }
 });
 function refresh_widget(){
     var setlamp = function () {
@@ -30,7 +36,7 @@ function refresh_widget(){
         RefreshColor();
     };
     var start = function () {
-        setlamp();
+        setlamp();        
         setTimeout(refresh,500);
     };
     start();
