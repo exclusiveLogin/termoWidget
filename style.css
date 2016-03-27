@@ -115,9 +115,10 @@ g.highcharts-range-selector-buttons > text {
 .w_updated{
     margin-bottom: 5px;
 }
-#refresh_btn{
-    position: absolute;
-    top: 8px;
-    left: 40px;
+#refresh_btn {
+    position: relative;
+    /* top: 0; */
+    left: 25px;
     z-index: 1;
+    margin-bottom: -50px;
 }

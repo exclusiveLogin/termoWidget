@@ -81,7 +81,7 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
         series:[{
             type: 'area',
             name: 'Скорость ветра северо-запад',
-            data:wind,
+            //data:wind,
             tooltip: {
                 valueDecimals: 1,
                 valueSuffix:' м/с'
@@ -90,7 +90,7 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
             {
                 type: 'area',
                 name: 'Скорость ветра юго-восток',
-                data:wind_p,
+                //data:wind_p,
                 color:"green",
                 fillOpacity:0.5,
                 tooltip: {
@@ -113,6 +113,17 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
             enabled: true
         },
         xAxis: {
+            id:"test",
+            events:{
+                afterSetExtremes:function(){
+                    var min = this.min,
+                        max = this.max,
+                        chart = this.chart;
+
+                    chart.xAxis[1].setExtremes(min,max);
+
+                }
+            },
             type: 'datetime',
             gridLineWidth:1,
             ordinal:false,
@@ -146,26 +157,30 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
         },
         rangeSelector:{
             buttons:[{
+                type:"hour",
+                count:8,
+                text:"8ч"
+            },{
                 type:"day",
                 count:1,
                 text:"1д"
-                },{
+            },{
                 type:"week",
                 count:1,
                 text:"7д"
-                },{
+            },{
                 type:"month",
                 count:1,
                 text:"мес"
-                },{
+            },{
                 type:"ytd",
                 text:"год"
-                },{
+            },{
                 type:"all",
                 text:"все"
                 }
             ],
-            selected:0
+            selected:1
         },
         navigator:{
             height:10
@@ -176,7 +191,7 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
         series:[{
             type: 'area',
             name: 'Температура воздуха',
-            data:temp0,
+            //data:temp0,
             tooltip: {
                 valueDecimals: 1,
                 valueSuffix:' °C'
@@ -200,7 +215,7 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
         },{
             type: 'spline',
             name: 'Средняя температура',
-            data:tempAVG,
+            //data:tempAVG,
             tooltip: {
                 valueDecimals: 1,
                 valueSuffix:' °C'
@@ -210,7 +225,7 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
         },{
             type: 'line',
             name: 'Температура -15см',
-            data:temp15,
+            //data:temp15,
             tooltip: {
                 valueDecimals: 1,
                 valueSuffix:' °C'
@@ -219,7 +234,7 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
         },{
             type: 'line',
             name: 'Температура -60см',
-            data:temp60,
+            //data:temp60,
             tooltip: {
                 valueDecimals: 1,
                 valueSuffix:' °C'
@@ -286,7 +301,7 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
                 text:"все"
             }
             ],
-            selected:0
+            selected:1
         },
         navigator:{
             height:10
@@ -297,7 +312,7 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
         series:[{
             type: 'area',
             name: 'Температура воздуха',
-            data:tempSad,
+            //data:tempSad,
             tooltip: {
                 valueDecimals: 1,
                 valueSuffix:' °C'
