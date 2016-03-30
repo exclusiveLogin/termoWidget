@@ -3,7 +3,19 @@
   <component name="ChangeListManager">
     <list default="true" id="9c5e01a4-e275-4d7a-a520-f9220e46bd2e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/style.css" afterPath="$PROJECT_DIR$/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/script/avgcalc.php" afterPath="$PROJECT_DIR$/script/avgcalc.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/script/countparser.php" afterPath="$PROJECT_DIR$/script/countparser.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/script/database.php" afterPath="$PROJECT_DIR$/script/database.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/script/refresher.php" afterPath="$PROJECT_DIR$/script/refresher.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/script/temp0parser.php" afterPath="$PROJECT_DIR$/script/temp0parser.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/script/temp15parser.php" afterPath="$PROJECT_DIR$/script/temp15parser.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/script/temp60parser.php" afterPath="$PROJECT_DIR$/script/temp60parser.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/script/tempavgparser.php" afterPath="$PROJECT_DIR$/script/tempavgparser.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/script/tempsadparser.php" afterPath="$PROJECT_DIR$/script/tempsadparser.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/script/windparser.php" afterPath="$PROJECT_DIR$/script/windparser.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/script/windparser_p.php" afterPath="$PROJECT_DIR$/script/windparser_p.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/temp/widget.ini" afterPath="$PROJECT_DIR$/temp/widget.ini" />
     </list>
     <ignored path="zasyzran.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -60,7 +72,7 @@
       <file leaf-file-name="opc.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/script/opc.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
+            <state relative-caret-position="2482">
               <caret line="316" column="25" selection-start-line="316" selection-start-column="25" selection-end-line="316" selection-end-column="25" />
               <folding>
                 <element signature="e#2729#3618#0" expanded="false" />
@@ -78,8 +90,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="229">
-              <caret line="20" column="71" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="71" />
+            <state relative-caret-position="340">
+              <caret line="20" column="71" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="109" />
               <folding />
             </state>
           </provider>
@@ -88,7 +100,7 @@
       <file leaf-file-name="full.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/full.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
+            <state relative-caret-position="442">
               <caret line="112" column="10" selection-start-line="112" selection-start-column="10" selection-end-line="112" selection-end-column="10" />
               <folding>
                 <element signature="n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
@@ -101,7 +113,7 @@
       <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
+            <state relative-caret-position="425">
               <caret line="118" column="23" selection-start-line="118" selection-start-column="23" selection-end-line="118" selection-end-column="23" />
               <folding />
             </state>
@@ -186,6 +198,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -220,7 +233,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -288,7 +300,8 @@
       <workItem from="1458915083021" duration="1714000" />
       <workItem from="1458917898051" duration="28876000" />
       <workItem from="1459062548517" duration="964000" />
-      <workItem from="1459064179693" duration="1173000" />
+      <workItem from="1459064179693" duration="1972000" />
+      <workItem from="1459353209755" duration="221000" />
     </task>
     <task id="LOCAL-00001" summary="update trends, async ajax update graphs">
       <created>1458985574024</created>
@@ -311,28 +324,35 @@
       <option name="project" value="LOCAL" />
       <updated>1459065225279</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="minified">
+      <created>1459065415211</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1459065415211</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36880000" />
+    <option name="totallyTimeSpent" value="37900000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1296" height="776" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24140625" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24140625" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32882884" sideWeight="0.49375" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2822823" sideWeight="0.50625" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2822823" sideWeight="0.515625" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2822823" sideWeight="0.4875" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2822823" sideWeight="0.484375" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32882884" sideWeight="0.49375" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -357,7 +377,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="update trends, async ajax update graphs" />
     <MESSAGE value="some bugs fixed, refresh trends button added" />
-    <option name="LAST_COMMIT_MESSAGE" value="some bugs fixed, refresh trends button added" />
+    <MESSAGE value="minified" />
+    <option name="LAST_COMMIT_MESSAGE" value="minified" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -725,7 +746,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/script/opc.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
+        <state relative-caret-position="2482">
           <caret line="316" column="25" selection-start-line="316" selection-start-column="25" selection-end-line="316" selection-end-column="25" />
           <folding>
             <element signature="e#2729#3618#0" expanded="false" />
@@ -741,15 +762,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="20" column="71" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="71" />
+        <state relative-caret-position="340">
+          <caret line="20" column="71" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="109" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/full.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
+        <state relative-caret-position="442">
           <caret line="112" column="10" selection-start-line="112" selection-start-column="10" selection-end-line="112" selection-end-column="10" />
           <folding>
             <element signature="n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
@@ -760,7 +781,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
+        <state relative-caret-position="425">
           <caret line="118" column="23" selection-start-line="118" selection-start-column="23" selection-end-line="118" selection-end-column="23" />
           <folding />
         </state>

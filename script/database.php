@@ -1,9 +1,6 @@
 <?php
 echo "{";
-$logindb="host1418693";
-$passdb="b2685de7";
-$dbhost="localhost";
-$dbname="host1418693_zasyzran";
+include_once "dbset.php";
 
 $mysql= new mysqli($dbhost,$logindb,$passdb,$dbname);
 
