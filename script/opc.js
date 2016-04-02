@@ -3,7 +3,7 @@ Global["wind"]=888;
 Global["temp0"]=888;
 Global["temp15"]=888;
 Global["temp60"]=888;
-Global["tempavg"]=.888;
+Global["tempavg"]=888;
 Global["wind_p"]=888;
 Global["windavg"]=888;
 Global["upd"]="---";
@@ -48,8 +48,8 @@ var ajaxOkWidget = false;
 $(document).ready(function(){
     refresh_opc();
     refresh_trends();
-    setInterval(refresh_opc,10000);
-    setInterval(refresh_trends,300000);
+    setInterval(refresh_opc,30000);
+    setInterval(refresh_trends,600000);
 });
 function refresh_opc(){
     //Не нужен если есть CRON
@@ -292,7 +292,7 @@ function checkopcconfirm() {
         if(ajaxOkWind_p){
             Global.windObj.series[1].setData(windTrend_p,false,true,true);
             ajaxOkWind_p = false;
-            Global.windObj.redraw();
+            //Global.windObj.redraw();
         }
         if(ajaxOkTemp0){
             //Global.tempObj.series[0].select(true);

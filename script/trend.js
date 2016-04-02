@@ -79,6 +79,7 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
             }
         },
         series:[{
+            gapSize:5,
             type: 'area',
             name: 'Скорость ветра северо-запад',
             //data:wind,
@@ -88,6 +89,7 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
             }
         },
             {
+                gapSize:5,
                 type: 'area',
                 name: 'Скорость ветра юго-восток',
                 //data:wind_p,
@@ -114,7 +116,7 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
         },
         xAxis: {
             id:"test",
-            events:{
+            /*events:{
                 afterSetExtremes:function(){
                     var min = this.min,
                         max = this.max,
@@ -123,7 +125,7 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
                     chart.xAxis[1].setExtremes(min,max);
 
                 }
-            },
+            },*/
             type: 'datetime',
             gridLineWidth:1,
             ordinal:false,
