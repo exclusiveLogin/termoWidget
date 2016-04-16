@@ -1,7 +1,7 @@
 
 
 function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
-    $('#termolog').highcharts("StockChart",{
+    $('#windlog').highcharts("StockChart",{
         credits:{enabled:false},
         chart: {
             zoomType: 'x',
@@ -25,7 +25,12 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
                 label:{
                     text:"Архив"
                 }
-            }]
+            }],
+            events:{
+                afterSetExtremes : function (e) {
+                    trendDetail(e);
+                }
+            }
         },
         yAxis: {
             title: {
@@ -34,9 +39,11 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
             floor:0
         },
         scrollbar:{
-            enabled:false
+            enabled:false,
+            liveRedraw:false
         },
         navigator:{
+            //adaptToUpdatedData:false,
             height:10
         },
         rangeSelector:{
@@ -101,7 +108,7 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
                 }
             }]
     });
-    Global.windObj = $('#termolog').highcharts();
+    Global.windObj = $('#windlog').highcharts();
     $('#termologfull').highcharts('StockChart', {
         credits:{enabled:false},
         chart: {
@@ -284,10 +291,6 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
         },
         rangeSelector:{
             buttons:[{
-                type:"day",
-                count:1,
-                text:"1д"
-            },{
                 type:"week",
                 count:1,
                 text:"7д"
@@ -303,7 +306,7 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
                 text:"все"
             }
             ],
-            selected:1
+            //selected:4
         },
         navigator:{
             height:10
@@ -312,8 +315,8 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
             enabled:false
         },
         series:[{
-            type: 'area',
-            name: 'Температура воздуха',
+            type: 'column',
+            name: 'Активная температура',
             //data:tempSad,
             tooltip: {
                 valueDecimals: 1,
@@ -335,7 +338,29 @@ function updateTrend() {
     Global.tempObj.series[3].setData(temp60Trend);
     Global.tempSadObj.series[0].setData(tempSadTrend);
 }
-
+function trendDetail(e) {
+//    console.log("min:"+Math.round(e.min)+"max:"+Math.round(e.max));
+//    console.log("interval:"+Math.round(e.max-e.min));
+    var maximum = Math.round(e.max);
+    var minimum = Math.round(e.min);
+    var interval = Math.round(e.max - e.min);
+    console.log("min: "+minimum+"    max: "+maximum);
+    console.log("interval: "+interval);
+    
+    //Сравнение интервала 
+    
+    
+    
+    //Запрос новых данных
+    
+    //Вешаем loading 
+    
+    //Получаем данные
+    
+    //Загружаем данные в тренд
+    
+    //Убираем loading
+}
 $(document).ready(function () {
     Highcharts.setOptions({
         global : {
@@ -345,25 +370,6 @@ $(document).ready(function () {
     $("#refresh_btn").on('click',function () {
         refresh_trends();
     })
-
     renderTrend(windTrend,windTrend_p,temp0Trend,temp15Trend,temp60Trend,tempAVGTrend,tempSadTrend);
-
-    if(Global.firstOpcDataConfirm){
-        //updateTrend(windTrend,windTrend_p,temp0Trend,temp15Trend,temp60Trend,tempAVGTrend,tempSadTrend);
-    }
-    else {
-        console.log("opc starting error");
-        //setTimeout(testOpcStart,1000);
-    }
-    
-    
+ 
 });
-function testOpcStart() {
-    if(Global.firstOpcDataConfirm){
-        updateTrend(windTrend,windTrend_p,temp0Trend,temp15Trend,temp60Trend,tempAVGTrend,tempSadTrend);
-    }
-    else{
-        console.log("opc starting error");
-        setTimeout(testOpcStart,1000);
-    }
-}

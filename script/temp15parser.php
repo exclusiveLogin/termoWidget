@@ -5,7 +5,7 @@ $mysql= new mysqli($dbhost,$logindb,$passdb,$dbname);
 
 if($mysql->connect_errno)die("error".$mysql->connect_error);
 $mysql->query("SET time_zone = '+00:00'");
-$res = $mysql->query("SELECT DATE_FORMAT(`datetime`,'%Y,%m,%d,%H,%i,%S') AS `datetime`,`value` FROM `log_temp15` ORDER BY `datetime`");
+$res = $mysql->query("SELECT DATE_FORMAT(`datetime`,'%Y,%m,%d,%H,%i,%S') AS `datetime`,`value` FROM `log_temp15` WHERE minute(datetime) BETWEEN 0 AND 4 ORDER BY `datetime`");
 
 $row = $res->fetch_assoc();
 echo "[";

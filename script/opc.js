@@ -292,7 +292,7 @@ function checkopcconfirm() {
         if(ajaxOkWind_p){
             Global.windObj.series[1].setData(windTrend_p,false,true,true);
             ajaxOkWind_p = false;
-            //Global.windObj.redraw();
+            Global.windObj.redraw();
         }
         if(ajaxOkTemp0){
             //Global.tempObj.series[0].select(true);
