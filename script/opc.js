@@ -34,6 +34,8 @@ var tempAVGTrend = new Array();
 var tempSadTrend = new Array();
 var timestampplot = new Date().getTime();
 
+var windStart = false;
+
 var ajaxOkWind = false; //Маркеры получения данных
 var ajaxOkWind_p = false;
 var ajaxOkTemp0 = false;
@@ -41,6 +43,16 @@ var ajaxOkTemp15 = false;
 var ajaxOkTemp60 = false;
 var ajaxOkTempAVG = false;
 var ajaxOkTempSad = false;
+
+var dataOkWind = false; //Маркеры установки данных
+var dataOkWind_p = false;
+var dataOkTemp0 = false;
+var dataOkTemp15 = false;
+var dataOkTemp60 = false;
+var dataOkTempAVG = false;
+var dataOkTempSad = false;
+
+
 
 var ajaxOkWidget = false;
 
@@ -93,13 +105,16 @@ function refresh_opc(){
     });
     
 }
-function refresh_trends() {
+function refresh_trends(wind_interval, wind_min, wind_max) {
     $.ajax({
         url:"script/windparser.php",
-        dateType:'json',
         type:'GET',
+        cache:false,
         //async:false,
+        data:{"wind_interval":wind_interval,"wind_min":wind_min,"wind_max":wind_max},
         success: function (data) {
+            windTrend = [];
+            windTrend[0]=[0]
             var test = $.parseJSON(data);
             var log;
             for(log in test){
@@ -111,6 +126,12 @@ function refresh_trends() {
                 //Decomposition datetime string;
                 windTrend[log]=[utcTimestamp,Number(test[log].value)];
             }
+            if(!Global.firstOpcDataConfirm_wind){
+                windStart = windTrend[0][0];
+            }else {
+                windTrend[0][0]= windStart;
+                windTrend[0][1]= 0;
+            }
             ajaxOkWind = true;
             Global.firstOpcDataConfirm_wind = true;
             checkopcconfirm();
@@ -121,10 +142,13 @@ function refresh_trends() {
     });
     $.ajax({
         url:"script/windparser_p.php",
-        dateType:'json',
         type:'GET',
+        cache:false,
         //async:false,
+        data:{"wind_interval":wind_interval,"wind_min":wind_min,"wind_max":wind_max},
         success: function (data) {
+            windTrend_p = [];
+            windTrend_p[0]=[0]
             var test = $.parseJSON(data);
             var log;
             for(log in test){
@@ -133,8 +157,13 @@ function refresh_trends() {
                 //Decomposition datetime string;
                 var utcTimestamp = Date.UTC(arrTimestamp[0],arrTimestamp[1],arrTimestamp[2],
                     arrTimestamp[3],arrTimestamp[4],arrTimestamp[5]);
-
                 windTrend_p[log]=[utcTimestamp,Number(test[log].value)];
+            }
+            if(!Global.firstOpcDataConfirm_wind){
+                windStart = windTrend[0][0];
+            }else {
+                windTrend_p[0][0]= windStart;
+                windTrend_p[0][1]= 0;
             }
             ajaxOkWind_p = true;
             Global.firstOpcDataConfirm_wind_p = true;
@@ -273,9 +302,13 @@ function refresh_trends() {
             console.log(err);
         }
     });
-
 }
-
+function trendsRedrawer() {
+    if(dataOkWind && dataOkWind_p){
+        Global.windObj.redraw();
+    }
+    else;
+}
 function checkopcconfirm() {
     if(Global.trendConnected){
         if(Global.firstOpcDataConfirm_temp0&&Global.firstOpcDataConfirm_temp15&&Global.firstOpcDataConfirm_temp60&&
@@ -285,38 +318,33 @@ function checkopcconfirm() {
         }
         
         if(ajaxOkWind){
-            Global.windObj.series[0].setData(windTrend,false,true,true);
+            Global.windObj.series[0].setData(windTrend,false,false);
             ajaxOkWind = false;
-            Global.windObj.redraw();
+            dataOkWind = true;
+            trendsRedrawer();
         }
         if(ajaxOkWind_p){
-            Global.windObj.series[1].setData(windTrend_p,false,true,true);
+            Global.windObj.series[1].setData(windTrend_p,false,false);
             ajaxOkWind_p = false;
-            Global.windObj.redraw();
+            dataOkWind_p = true;
+            trendsRedrawer();
         }
-        if(ajaxOkTemp0){
-            //Global.tempObj.series[0].select(true);
-            Global.tempObj.series[0].setData(temp0Trend,false,true,true);
-            Global.tempObj.redraw();
-            //var s={},n={};
-            //s=Global.tempObj.xAxis[0].getExtremes();
-            //n=Global.tempObj.xAxis[1].getExtremes();
-            //console.log(s.max);
-            //console.log(n.max);
-            //Global.tempObj.xAxis[1].setExtremes(s.min, n.dataMax);
 
-            //Global.tempObj.reflow();
+
+        if(ajaxOkTemp0){
+            Global.tempObj.series[0].setData(temp0Trend,true,true,true);
+            //Global.tempObj.redraw();
             ajaxOkTemp0 = false;
         }
         if(ajaxOkTemp15){
-            Global.tempObj.series[2].setData(temp15Trend,false,true,true);
-            Global.tempObj.redraw();
+            Global.tempObj.series[2].setData(temp15Trend,true,true,true);
+            //Global.tempObj.redraw();
             ajaxOkTemp15 = false;
             
         }
         if(ajaxOkTemp60){
-            Global.tempObj.series[3].setData(temp60Trend,false,true,true);
-            Global.tempObj.redraw();
+            Global.tempObj.series[3].setData(temp60Trend,true,true,true);
+            //Global.tempObj.redraw();
             ajaxOkTemp60 = false;
         }
         if(ajaxOkTempAVG){
@@ -325,8 +353,8 @@ function checkopcconfirm() {
             ajaxOkTempAVG = false;
         }
         if(ajaxOkTempSad){
-            Global.tempSadObj.series[0].setData(tempSadTrend,false,true,true);
-            Global.tempSadObj.redraw();
+            Global.tempSadObj.series[0].setData(tempSadTrend,true,true,true);
+            //Global.tempSadObj.redraw();
             ajaxOkTempSad = false;
         }
     }

@@ -14,7 +14,6 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
             enabled: false
         },
         xAxis: {
-
             type: 'datetime',
             gridLineWidth:1,
             ordinal:false,
@@ -27,10 +26,9 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
                 }
             }],
             events:{
-                afterSetExtremes : function (e) {
-                    trendDetail(e);
-                }
-            }
+                afterSetExtremes : trendDetail
+            },
+            minRange:1000*3600*24
         },
         yAxis: {
             title: {
@@ -43,10 +41,11 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
             liveRedraw:false
         },
         navigator:{
-            //adaptToUpdatedData:false,
+            adaptToUpdatedData:false,
             height:10
         },
         rangeSelector:{
+            
             buttons:[{
                 type:"hour",
                 count:1,
@@ -70,7 +69,8 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
                 text:"Все"
                 }
             ],
-            selected:2
+            selected:2,
+            inputEnabled: false
         },
         plotOptions: {
             area: {
@@ -329,37 +329,17 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
     Global.trendConnected = true;
 }
 
-function updateTrend() {
-    Global.windObj.series[0].setData(windTrend);
-    Global.windObj.series[1].setData(windTrend_p);
-    Global.tempObj.series[0].setData(temp0Trend);
-    Global.tempObj.series[1].setData(tempAVGTrend);
-    Global.tempObj.series[2].setData(temp15Trend);
-    Global.tempObj.series[3].setData(temp60Trend);
-    Global.tempSadObj.series[0].setData(tempSadTrend);
-}
 function trendDetail(e) {
-//    console.log("min:"+Math.round(e.min)+"max:"+Math.round(e.max));
-//    console.log("interval:"+Math.round(e.max-e.min));
     var maximum = Math.round(e.max);
     var minimum = Math.round(e.min);
     var interval = Math.round(e.max - e.min);
-    console.log("min: "+minimum+"    max: "+maximum);
-    console.log("interval: "+interval);
     
     //Сравнение интервала 
-    
-    
-    
-    //Запрос новых данных
-    
-    //Вешаем loading 
-    
-    //Получаем данные
-    
-    //Загружаем данные в тренд
-    
-    //Убираем loading
+    if(interval<86400000*3){
+        refresh_trends(true, minimum, maximum);
+    }else{
+        refresh_trends();
+    }
 }
 $(document).ready(function () {
     Highcharts.setOptions({
@@ -368,7 +348,9 @@ $(document).ready(function () {
         }
     });
     $("#refresh_btn").on('click',function () {
-        refresh_trends();
+        var wextr = Global.windObj.xAxis[0].getExtremes();
+        wextr.max = new Date().getTime();
+        trendDetail(wextr);
     })
     renderTrend(windTrend,windTrend_p,temp0Trend,temp15Trend,temp60Trend,tempAVGTrend,tempSadTrend);
  
