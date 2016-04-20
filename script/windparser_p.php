@@ -1,25 +1,19 @@
 <?php
 include_once "dbset.php";
 
-$get_interval = $_GET["wind_interval"];
-$get_min = $_GET["wind_min"]/1000;
-$get_max = $_GET["wind_max"]/1000;
-
-//echo "interval".$get_interval;
-//echo "min: ".$get_min;
-//echo "max: ".$get_max;
-
+$get_windinterval = $_GET["wind_interval"];
+$get_windmin = $_GET["wind_min"]/1000;
+$get_windmax = $_GET["wind_max"]/1000;
 
 $mysql= new mysqli($dbhost,$logindb,$passdb,$dbname);
 
 if($mysql->connect_errno)die("error".$mysql->connect_error);
 $mysql->query("SET time_zone = '+00:00'");
 
-if($get_interval && $get_min && $get_max ){
-    $res = $mysql->query("SELECT DATE_FORMAT(`datetime`,'%Y,%m,%d,%H,%i,%S') AS `datetime`,`value` FROM `log_wind_p` WHERE UNIX_TIMESTAMP(`datetime`) BETWEEN $get_min AND $get_max ORDER BY `datetime` ASC");
+if($get_windinterval && $get_windmin && $get_windmax ){
+    $res = $mysql->query("SELECT DATE_FORMAT(`datetime`,'%Y,%m,%d,%H,%i,%S') AS `datetime`,`value` FROM `log_wind_p` WHERE UNIX_TIMESTAMP(`datetime`) BETWEEN $get_windmin AND $get_windmax ORDER BY `datetime` ASC");
 }
 else{
-//    echo "normal mode";
     $res = $mysql->query("SELECT DATE_FORMAT(`datetime`,'%Y,%m,%d,%H,%i,%S') AS `datetime`,`value` FROM `log_wind_p` WHERE minute(datetime) BETWEEN 0 AND 4 ORDER BY `datetime` ASC");
 }
 $row = $res->fetch_assoc();
@@ -30,6 +24,11 @@ while($row){
     $row = $res->fetch_assoc();
     if($row) echo ",";
 }
-echo "]";
+//echo "]";
 $res->close();
+$res = $mysql->query("SELECT DATE_FORMAT(`datetime`,'%Y,%m,%d,%H,%i,%S') AS `datetime`,`value` FROM `log_wind_p` WHERE `datetime`=(SELECT MAX(`datetime`) FROM `log_wind_p`)");
+$row = $res->fetch_assoc();
+echo ",";
+echo json_encode($row);
+echo "]";
 $mysql->close();

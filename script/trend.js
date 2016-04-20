@@ -1,6 +1,7 @@
 
 
 function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
+    
     $('#windlog').highcharts("StockChart",{
         credits:{enabled:false},
         chart: {
@@ -26,7 +27,9 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
                 }
             }],
             events:{
-                afterSetExtremes : trendDetail
+                afterSetExtremes : function(e){
+                    trendWindDetail(e);
+                },
             },
             minRange:1000*3600*24
         },
@@ -122,17 +125,6 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
             enabled: true
         },
         xAxis: {
-            id:"test",
-            /*events:{
-                afterSetExtremes:function(){
-                    var min = this.min,
-                        max = this.max,
-                        chart = this.chart;
-
-                    chart.xAxis[1].setExtremes(min,max);
-
-                }
-            },*/
             type: 'datetime',
             gridLineWidth:1,
             ordinal:false,
@@ -143,7 +135,13 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
                 label:{
                     text:"Архив"
                 }
-            }]
+            }],
+            events:{
+                afterSetExtremes : function(e){
+                    trendTempDetail(e);
+                },
+            },
+            minRange:1000*3600*12
         },
         yAxis: {
             title: {
@@ -191,11 +189,13 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
             ],
             selected:1
         },
-        navigator:{
-            height:10
-        },
         scrollbar:{
-            enabled:false
+            enabled:false,
+            liveRedraw:false
+        },
+        navigator:{
+            adaptToUpdatedData:false,
+            height:10
         },
         series:[{
             type: 'area',
@@ -252,7 +252,7 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
         }]
     });
     Global.tempObj = $('#termologfull').highcharts();
-    $('#termosad').highcharts('StockChart', {
+    $('#termosad').highcharts('StockChart',{
         credits:{enabled:false},
         chart: {
             zoomType: 'x',
@@ -276,7 +276,7 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
             floor:0
         },
         plotOptions: {
-            area: {
+            column: {
                 marker: {
                     radius: 2
                 },
@@ -328,17 +328,28 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
     Global.tempSadObj = $('#termosad').highcharts();
     Global.trendConnected = true;
 }
-
-function trendDetail(e) {
+function trendWindDetail(e) {
     var maximum = Math.round(e.max);
     var minimum = Math.round(e.min);
     var interval = Math.round(e.max - e.min);
-    
-    //Сравнение интервала 
+
+    //Сравнение интервала
     if(interval<86400000*3){
-        refresh_trends(true, minimum, maximum);
+        refreshWindTrends(true, minimum, maximum);
     }else{
-        refresh_trends();
+        refreshWindTrends(false);
+    }
+}
+function trendTempDetail(e) {
+    var maximum = Math.round(e.max);
+    var minimum = Math.round(e.min);
+    var interval = Math.round(e.max - e.min);
+
+    //Сравнение интервала
+    if(interval<86400000*3){
+        refreshTempTrends(true, minimum, maximum);
+    }else{
+        refreshTempTrends(false);
     }
 }
 $(document).ready(function () {
@@ -349,8 +360,16 @@ $(document).ready(function () {
     });
     $("#refresh_btn").on('click',function () {
         var wextr = Global.windObj.xAxis[0].getExtremes();
-        wextr.max = new Date().getTime();
-        trendDetail(wextr);
+        var textr = Global.tempObj.xAxis[0].getExtremes();
+        //wextr.max = new Date().getTime();
+        //var xtr = Global.windObj.xAxis[0].getExtremes();
+        //var min = xtr.min,
+        //    max = xtr.dataMax;
+        //Global.windObj.xAxis[0].setExtremes(min,max);
+        //trendDetail(wextr);
+        refresh_trends();
+        trendWindDetail(wextr);
+        trendTempDetail(textr)
     })
     renderTrend(windTrend,windTrend_p,temp0Trend,temp15Trend,temp60Trend,tempAVGTrend,tempSadTrend);
  
