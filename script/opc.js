@@ -64,8 +64,8 @@ var ajaxOkWidget = false;
 $(document).ready(function(){
     refresh_opc();
     refresh_trends();
-    setInterval(refresh_opc,30000);
-    setInterval(refresh_trends,600000);
+    setInterval(refresh_opc,10000);
+    setInterval(refresh_trends,60000);
 });
 function refresh_opc(){
     //Не нужен если есть CRON
@@ -113,6 +113,16 @@ function refresh_trends() {
     refreshWindTrends();
     refreshTempTrends();
     refreshSadTrends();
+    if(Global.windObj){
+        var wextr = Global.windObj.xAxis[0].getExtremes();
+        trendWindDetail(wextr);
+        Global.windObj.xAxis[0].setExtremes(wextr.min, wextr.dataMax);
+    }
+    if(Global.tempObj){
+        var textr = Global.tempObj.xAxis[0].getExtremes();
+        trendTempDetail(textr);
+        Global.tempObj.xAxis[0].setExtremes(textr.min, textr.dataMax);
+    }
 }
 function refreshWindTrends(wind_interval, wind_min, wind_max) {
     $.ajax({

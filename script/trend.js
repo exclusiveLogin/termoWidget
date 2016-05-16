@@ -31,7 +31,7 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
                     trendWindDetail(e);
                 },
             },
-            minRange:1000*3600*24
+            minRange:1000*3600*8
         },
         yAxis: {
             title: {
@@ -51,28 +51,21 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
             
             buttons:[{
                 type:"hour",
-                count:1,
-                text:"1ч"
-            },{
-                type:"hour",
-                count:3,
-                text:"3ч"
+                count:8,
+                text:"8ч"
             },{
                 type:"day",
                 count:1,
                 text:"1д"
-                },
-                {
+            },{
                 type:"week",
                 count:1,
                 text:"7д"
-                }
-                ,{
+            },{
                 type:"all",
                 text:"Все"
-                }
-            ],
-            selected:2,
+            }],
+            selected:1,
             inputEnabled: false
         },
         plotOptions: {
@@ -141,7 +134,7 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
                     trendTempDetail(e);
                 },
             },
-            minRange:1000*3600*12
+            minRange:1000*3600*8
         },
         yAxis: {
             title: {
@@ -266,7 +259,6 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
         },
         xAxis: {
             type: 'datetime',
-            gridLineWidth:1,
             ordinal:true
         },
         yAxis: {
@@ -275,7 +267,7 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
             },
             floor:0
         },
-        plotOptions: {
+        /*plotOptions: {
             column: {
                 marker: {
                     radius: 2
@@ -288,7 +280,7 @@ function renderTrend(wind,wind_p,temp0,temp15,temp60,tempAVG,tempSad){
                 },
                 threshold: null
             }
-        },
+        },*/
         rangeSelector:{
             buttons:[{
                 type:"week",
@@ -359,17 +351,13 @@ $(document).ready(function () {
         }
     });
     $("#refresh_btn").on('click',function () {
-        var wextr = Global.windObj.xAxis[0].getExtremes();
-        var textr = Global.tempObj.xAxis[0].getExtremes();
-        //wextr.max = new Date().getTime();
-        //var xtr = Global.windObj.xAxis[0].getExtremes();
-        //var min = xtr.min,
-        //    max = xtr.dataMax;
-        //Global.windObj.xAxis[0].setExtremes(min,max);
-        //trendDetail(wextr);
+        //var wextr = Global.windObj.xAxis[0].getExtremes();
+        //var textr = Global.tempObj.xAxis[0].getExtremes();
+        //wextr.max += 1000*60000;
+        //Global.windObj.xAxis[0].setExtremes(wextr.min,wextr.dataMax);
         refresh_trends();
-        trendWindDetail(wextr);
-        trendTempDetail(textr)
+        //trendWindDetail(wextr);
+        //trendTempDetail(textr);
     })
     renderTrend(windTrend,windTrend_p,temp0Trend,temp15Trend,temp60Trend,tempAVGTrend,tempSadTrend);
  

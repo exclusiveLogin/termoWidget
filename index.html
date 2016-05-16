@@ -2,6 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="keywords" content="Графики, температура, ветер, активные температуры, сад, сызрань, погода">
+    <meta name="description" content="Необходимый инструмент для наблюдения за Вашим садом. Отслеживание температуры воздуха, и на глубине 15 и 60 см. График активных (накопленных) температур.">
     <title>Погодный виджет</title>
     <link href="bootstrap-3.3.6-dist/css/bootstrap.css" rel="stylesheet">
     <link href="bootstrap-3.3.6-dist/css/bootstrap-theme.css" rel="stylesheet">
@@ -16,12 +18,13 @@
 
 </head>
 <body>
-
+<h1 style="display: none">Графики температуры и ветра</h1>
+<h2 style="display: none">Удобный инструмент, как для повседневного наблюдения, так и для профессиональных дачников и садоводов</h2>
 <div class="termo_container container-fluid">
     <div class="btn btn-default hidden-xs" id="refresh_btn"><i class="glyphicon glyphicon-refresh"></i></div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 termo_right" id="windlog">Тут будут графики температуры и ветра</div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="termologfull">Тут будут графики температуры и ветра</div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="termosad">Тут будут график сада</div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 termo_right" id="windlog">График ветра</div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="termologfull">График температур</div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="termosad">График активных (накопленных) температур</div>
 </div>
 
 </body>
